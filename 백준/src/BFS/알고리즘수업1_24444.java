@@ -42,7 +42,7 @@ public class 알고리즘수업1_24444 {
 			st = new StringTokenizer(br.readLine()); // 공백을 기준으로 쪼개기
 			int x = Integer.parseInt(st.nextToken()); // x 와 연결된 
 			int y = Integer.parseInt(st.nextToken()); // y
-			// 양방향 간선
+			// 무방향 그래프이므로 
 			arr[x].add(y); // x번째 리스트에 x번의 정점과 연결된 정점 y를 추가
 			arr[y].add(x); // y번째 리스트에 y번의 정점과 연결된 정점 x를 추가
 		}
