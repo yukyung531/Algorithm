@@ -9,6 +9,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
+// 어려웠다.
+// 리스트를 원소로 가지는 배열을 처음 사용해보았다.
+// bufferdReader를 사용했는데, 익숙지 않아 쉽지 않았다.
+// 머릿속으로 생각한 것을 코드로 구현하기가 쉽지 않아서 구글링을 하며 여러 bfs방법들을 참고하였다.
+// 이 문제에는 적용되지 않는 bfs 코드도 있었어서 많이 헤맸다.
+// 이 문제를 푸는 데에만 하루종일 하진 않았지만 3일정도 걸린 것 같다.
+// 더 많은 문제를 풀어보며 익숙해져야겠다.
 
 public class 알고리즘수업1_24444 {
 	static int N, M, R; // 정점의 수, 간선의 수, 시작정점
@@ -35,6 +42,7 @@ public class 알고리즘수업1_24444 {
 			st = new StringTokenizer(br.readLine()); // 공백을 기준으로 쪼개기
 			int x = Integer.parseInt(st.nextToken()); // x 와 연결된 
 			int y = Integer.parseInt(st.nextToken()); // y
+			// 양방향 간선
 			arr[x].add(y); // x번째 리스트에 x번의 정점과 연결된 정점 y를 추가
 			arr[y].add(x); // y번째 리스트에 y번의 정점과 연결된 정점 x를 추가
 		}
