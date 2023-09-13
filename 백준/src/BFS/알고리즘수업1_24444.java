@@ -11,61 +11,61 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class 알고리즘수업1_24444 {
-	static int N, M, R;
-	static ArrayList<ArrayList<Integer>> arr;
-	static boolean[] visited;
+	static int N, M, R; // 정점의 수, 간선의 수, 시작정점
+	static ArrayList<Integer>[] arr; // 리스트를 원소로 가지는 배열(각 정점과 연결된 정점을 리스트로 받을 것임)
+	static boolean[] visited; // 방문체크
 	static int[] node; // 방문 순서
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		st = new StringTokenizer(br.readLine());
+		st = new StringTokenizer(br.readLine()); // 공백을 기준으로 쪼개기
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		R = Integer.parseInt(st.nextToken());
 
-
-		for(int i =0; i<=N; i++) {
-			arr.add(new ArrayList<>());
-			
+		arr = new ArrayList[N+1]; // 정점의 수 + 1 (정점 번호와 인덱스 번호를 맞추기 위해)
+		
+		for (int i = 0; i <= N; i++) {
+			arr[i] = new ArrayList<>();
 		}
 
-		System.out.println(arr.size());
-		
+
 		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
-			int x = Integer.parseInt(st.nextToken());
-			int y = Integer.parseInt(st.nextToken());
-			arr.get(x).add(y); // x번째 리스트에 x번의 정점과 연결된 정점 y를 추가
+			st = new StringTokenizer(br.readLine()); // 공백을 기준으로 쪼개기
+			int x = Integer.parseInt(st.nextToken()); // x 와 연결된 
+			int y = Integer.parseInt(st.nextToken()); // y
+			arr[x].add(y); // x번째 리스트에 x번의 정점과 연결된 정점 y를 추가
+			arr[y].add(x); // y번째 리스트에 y번의 정점과 연결된 정점 x를 추가
 		}
-		
-		visited = new boolean[N+1];
-		node = new int[N+1];
+
+		visited = new boolean[N + 1]; // _번 정점이 방문했는지 확인하기 위해
+		node = new int[N + 1]; // _번 정점이 몇번째로 방문되는지 확인하기 위해
 		BFS();
-		
+
 	}// main
 
 	public static void BFS() {
-		Queue<Integer> q = new LinkedList<>();
-		q.add(R); // 시작 정점 넣기
-		int cnt = 1;
-		visited[R]=true; // 시작 정점 방문체크
-		node[R]=cnt;
-		while(!q.isEmpty()) {//q가 빌 때까지 반복
-			int n = q.poll(); // 큐에서 빼기
-			Collections.sort(arr.get(n)); // n번째 리스트 오름차순 정렬
-			for(int i : arr.get(n)) { // n번과 연결된 정점을 순회
-				if(!visited[i]) { // 방문하지 않았다면
-					cnt+=1;
-					visited[i]=true; // 방문 체크
+		Queue<Integer> q = new LinkedList<>(); // 큐 만들기
+		q.add(R); // 큐에 시작 정점 넣기
+		int cnt = 1; // 시작 정점은 방문 번호 1
+		visited[R] = true; // 시작 정점 방문체크
+		node[R] = cnt; // node 배열의 시작정점 인덱스에 방문번호 넣어주기
+		while (!q.isEmpty()) {// 큐가 빌 때까지 반복
+			int n = q.poll(); // n은 큐의 맨 앞에서 빼기
+			Collections.sort(arr[n]); // n번째 리스트 오름차순 정렬
+			for (int i : arr[n]) { // n번과 연결된 정점을 순회
+				if (!visited[i]) { // 방문하지 않았다면
+					cnt += 1;
+					visited[i] = true; // 방문 체크
 					q.add(i); // 큐에 추가
-					node[i]=cnt; // 방문순서 입력
+					node[i] = cnt; // 방문순서 입력
 				}
 			}
-			for(int i = 1; i<=N; i++) {
-				System.out.println(node[i]);
-			}
-			
+		}//while
+		for (int i = 1; i <= N; i++) {
+			System.out.println(node[i]);
 		}
+
 	}
 }
