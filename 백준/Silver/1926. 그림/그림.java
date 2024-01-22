@@ -1,7 +1,7 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
     public static class Node {
@@ -24,21 +24,29 @@ public class Main {
     static int maxSize;
     // 그림 넓이
     static int artSize;
+    // 우하좌상
+    static int[] dr = {0, 1, 0, -1};
+    static int[] dc = {1, 0, -1, 0};
+    public static void main(String[] args) throws IOException {
+//        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         // 도화지 세로
-        n = sc.nextInt();
+//        n = sc.nextInt();
+        n = Integer.parseInt(st.nextToken());
         // 도화지 가로
-        m = sc.nextInt();
+//        m = sc.nextInt();
+        m = Integer.parseInt(st.nextToken());
 
         // 도화지 배열
         paper = new int[n][m];
 
         // 그림 정보 입력받기
         for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
             for (int j = 0; j < m; j++) {
-                paper[i][j] = sc.nextInt();
+                paper[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
@@ -68,9 +76,6 @@ public class Main {
     // main
     public static void bfs(Node node) {
         artSize = 0;
-        // 우하좌상
-        int[] dr = {0, 1, 0, -1};
-        int[] dc = {1, 0, -1, 0};
         Queue<Node> q = new ArrayDeque<>();
 
         // 시작 위치 넣기
