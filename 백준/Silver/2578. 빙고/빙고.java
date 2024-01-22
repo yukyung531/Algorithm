@@ -7,6 +7,14 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
+
+    /* 1. 철수의 빙고판을 입력받는다.
+       2. 사회자가 부르는 숫자를 입력받음과 동시에, 그 숫자를 철수의 빙고판에서 찾아서 해당 좌표값를 0으로 바꾼다.
+       3. 빙고가 있는지 확인한다.
+        3-1. 가로, 세로, 대각선이 빙고가 되는지 확인하는 함수를 만든다.
+        3-2. 빙고일 때마다 빙고횟수 +1
+       4. 빙고횟수가 3번이 되면 답을 출력하고, 종료한다.
+    */
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -28,7 +36,6 @@ public class Main {
             for (int j = 1; j <= 5; j++) {
                 int num = Integer.parseInt(st.nextToken());
 
-
                 // 철수 빙고판에서 num 찾아서 체크(0으로 변경)
                 for (int k = 0; k < 5; k++) {
                     for (int l = 0; l < 5; l++) {
@@ -38,9 +45,11 @@ public class Main {
                     }
                 }
 
-                // 숫자를 지우기 전에 빙고 확인
+                // 빙고 확인
                 bingo = checkBingo(cheolsu);
                 if (bingo >= 3) {
+                    // 사회자가 몇번째 숫자를 부를 때 빙고가 3번이 되는지 확인하는 것이므로
+                    // 아래 수식의 값을 출력한다.
                     System.out.println((5 * (i - 1)) + j);
                     return;
                 }
@@ -50,6 +59,7 @@ public class Main {
     }
     //main
     public static int checkBingo(int[][] board) {
+        // 빙고 횟수 초기화
         int bingo = 0;
         // 가로, 세로, 대각선 확인
         for (int i = 0; i < 5; i++) {
