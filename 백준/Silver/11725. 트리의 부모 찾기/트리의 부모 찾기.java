@@ -1,12 +1,16 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
+public class Main{
+    public static void main(String[] args) throws IOException {
+//        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
         // 노드 개수
-        int N = sc.nextInt();
-
+//        int N = sc.nextInt();
+            int N = Integer.parseInt(st.nextToken());
         // 리스트를 원소로 가지는 배열
         List<Integer>[] list = new ArrayList[N + 1];
 
@@ -16,8 +20,11 @@ public class Main {
         }
 
         for (int i = 0; i < N - 1; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
+            st = new StringTokenizer(br.readLine());
+//            int a = sc.nextInt();
+//            int b = sc.nextInt();
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
             list[a].add(b);
             list[b].add(a);
