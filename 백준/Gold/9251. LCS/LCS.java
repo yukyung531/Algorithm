@@ -2,40 +2,31 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-		// 첫번째 문자열
-		String x = sc.next();
-		char[] X = x.toCharArray();
+        // 문자 배열로 만든다.
+        char[] A = sc.next().toCharArray();
+        char[] B = sc.next().toCharArray();
 
-		// 두번째 문자열
-		String y = sc.next();
-		char[] Y = y.toCharArray();
+        // dp 배열을 만든다.
+        int[][] dp = new int[A.length+1][B.length+1];
 
-		// 이차원 배열 생성
-		int[][] dp = new int [X.length+1][Y.length+1];
-		
-		
-		for(int i = 1; i<X.length+1; i++) {
-			for(int j = 1; j<Y.length+1; j++) {
-				// 만약 두 수가 다르다면
-				if(X[i-1]!=Y[j-1]) {
-					dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
-				}
-				// 만약 두 수가 같다면
-				else {
-					dp[i][j] = dp[i-1][j-1]+1;
-				}
-			}
-		}
-//		for(int[] a : dp)
-//		System.out.println(Arrays.toString(a));
-		
-		// 답 출력
-		System.out.println(dp[X.length][Y.length]);
+        for(int i = 1; i<A.length+1; i++){
+            for(int j = 1; j<B.length+1; j++){
+                // 다른 문자이면 위와 아래 중 큰 수로
+                if(A[i-1]!=B[j-1]){
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                }
+                // 같은 문자이면 대각선 수 + 1
+                else{
+                    dp[i][j] = dp[i-1][j-1]+1;
+                }
+            }
+        }
 
-	}
-	// main
+        System.out.println(dp[A.length][B.length]);
 
+    }
+    // main
 }
