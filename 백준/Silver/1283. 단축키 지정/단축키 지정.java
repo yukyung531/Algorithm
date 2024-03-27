@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Main {
     static List<String> save;
-    static List<String>[] list;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -25,8 +24,9 @@ public class Main {
             // 공백으로 나눠서 저장
             list[i].addAll(Arrays.asList(input.split(" ")));
         }
+        // 입력 완료
 
-        // 저장된 옵션 확인
+        // 단축키 저장할 리스트
         save = new ArrayList<>();
 
         // 첫단어에서 단축키가 지정됐는지 여부
@@ -34,6 +34,7 @@ public class Main {
 
         // 전체 배열 리스트 반복
         for (int i = 0; i < list.length; i++) {
+            // 출력
             if(i>0){
                 for(int j = 0; j<list[i-1].size(); j++) {
                     System.out.print(list[i - 1].get(j)+" ");
@@ -42,30 +43,34 @@ public class Main {
             }
 
             // 각 리스트 반복
+            // 첫 글자만 확인
             for (int b = 0; b < list[i].size(); b++) {
-
-                // list[i]의 단어들을 처음부터 확인
-                // 첫 단어 확인
+                // 기존 입력값
                 List<String> originList = Arrays.asList(list[i].get(b).split(""));
+                // 첫글자를 확인한 후의 값
                 List<String> newList = checkFirst(list[i].get(b));
+                // 기존 입력값과 첫글자를 확인한 후의 값이 다르다면 값을 바꿔주자.
                 if (!originList.equals(newList)) {
                     StringBuilder sb = new StringBuilder();
                     for(int k = 0; k<newList.size(); k++){
                         sb.append(newList.get(k));
                     }
                     list[i].set(b, String.valueOf(sb));
+                    // 첫단어가 단축키로 지정되었다면 다음 줄 확인하자
                     firstChange = true;
                     break;
                 }
                 firstChange = false;
             }
 
+            // 첫단어에서 단축키가 지정되지 않았다면 두번째 글자부터 확인
             if (!firstChange) {
                 // 두 번째 단어부터 확인
                 for (int b = 0; b < list[i].size(); b++) {
 
                     List<String> originList = Arrays.asList(list[i].get(b).split(""));
                     List<String> newList = checkSecond(list[i].get(b));
+                    // 기존 입력값과 첫글자를 확인한 후의 값이 다르다면 값을 바꿔주자.
                     if (!originList.equals(newList)) {
                         StringBuilder sb = new StringBuilder();
                         for(int k = 0; k<newList.size(); k++){
@@ -75,14 +80,10 @@ public class Main {
                         break;
                     }
                 }
-
             }
-
-            // else
-
         }
-//         입력 확인
 
+        // 마지막 인덱스 출력
         for(int i = 0; i<list[list.length-1].size(); i++){
             System.out.print(list[list.length-1].get(i)+" ");
         }
@@ -91,16 +92,15 @@ public class Main {
     }
     // main
 
-
     /**
-     * 첫 글자 확인(option : 옵션(list[i])
+     * 첫 글자 확인(option : 옵션(list[i].get(j))
      */
-    public static List<String> checkFirst(String options) {
+    public static List<String> checkFirst(String option) {
         List<String> newList = new ArrayList<>();
         // 옵션 수만큼 반복
 
         // 한글자씩 쪼갠 리스트로 만들기
-        newList = new ArrayList<>(Arrays.asList(options.split("")));
+        newList = new ArrayList<>(Arrays.asList(option.split("")));
         // 첫 글자 확인
         if (save.contains(newList.get(0).toUpperCase())) {
             return newList;
@@ -109,19 +109,18 @@ public class Main {
             newList.add(0, "[");
             newList.add(2, "]");
             return newList;
-
         }
     }
 
     /**
      * 두 번째 글자부터 확인
      */
-    public static List<String> checkSecond(String options) {
+    public static List<String> checkSecond(String option) {
         List<String> newList = new ArrayList<>();
         // 옵션 수만큼 반복
-        for (int i = 0; i < options.length(); i++) {
+        for (int i = 0; i < option.length(); i++) {
             // 각 단어를 한글자씩 쪼갠 리스트로 만들기
-            newList = new ArrayList<>(Arrays.asList(options.split("")));
+            newList = new ArrayList<>(Arrays.asList(option.split("")));
             // 두 번째 글자부터 확인
             for (int j = 1; j < newList.size(); j++) {
                 if (save.contains(newList.get(j).toUpperCase())) {
