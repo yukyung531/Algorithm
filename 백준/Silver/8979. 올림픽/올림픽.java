@@ -1,23 +1,31 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int N = sc.nextInt(); // 국가 수
-        int K = sc.nextInt(); // 등수가 궁금한 국가
+        int N = Integer.parseInt(st.nextToken()); // 국가 수
+        int K = Integer.parseInt(st.nextToken()); // 등수가 궁금한 국가
 
         int[][] input = new int[N][4]; // 국가, 금은동 입력
         int[] rank = new int[N+1];
 
         for(int i = 0; i<N; i++){
-            input[i][0] = sc.nextInt(); // 국가
-            input[i][1] = sc.nextInt(); // 금
-            input[i][2] = sc.nextInt(); // 은
-            input[i][3] = sc.nextInt(); // 동
+            st = new StringTokenizer(br.readLine());
+            input[i][0] = Integer.parseInt(st.nextToken()); // 국가
+            input[i][1] = Integer.parseInt(st.nextToken()); // 금
+            input[i][2] = Integer.parseInt(st.nextToken()); // 은
+            input[i][3] = Integer.parseInt(st.nextToken()); // 동
         }
+        br.close();
 
         Arrays.sort(input, (a, b) -> {
             // 먼저 [i][1]을 비교
@@ -32,24 +40,17 @@ public class Main {
             return -Integer.compare(a[3], b[3]);
         });
 
-//        // 정렬된 배열 출력
-//        for (int[] row : input) {
-//            System.out.println(Arrays.toString(row));
-//        }
-
-        int now = 1; // 1등부터 시작
+        int cnt = 1; // 중복제외 등수
         rank[input[0][0]] = 1;
         for(int i = 1; i<N; i++){
+            cnt++;
             // 금은동 모두 같다면 같은 등수
             if(input[i][1] == input[i-1][1] && input[i][2] == input[i-1][2] && input[i][3] == input[i-1][3]){
-                rank[input[i][0]] = now;
+                rank[input[i][0]] = rank[input[i-1][0]];
             }
             else{
-                now++;
-                rank[input[i][0]] = now;
-                continue;
+                rank[input[i][0]] = cnt;
             }
-            now++;
         }
 
         System.out.println(rank[K]);
