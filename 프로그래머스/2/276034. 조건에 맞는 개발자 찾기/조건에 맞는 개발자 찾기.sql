@@ -1,0 +1,10 @@
+-- 코드를 작성해주세요
+SELECT ID, EMAIL, FIRST_NAME, LAST_NAME
+FROM DEVELOPERS D
+WHERE EXISTS (
+    SELECT *
+    FROM SKILLCODES S
+    WHERE S.CODE & D.SKILL_CODE != 0 AND
+            S.NAME IN('Python', 'C#'))
+ORDER BY ID;
+            
